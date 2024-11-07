@@ -5,9 +5,7 @@ session_start();
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 } else {
-    // If the user is not logged in, redirect to the login page
-    header("Location:signupa.php");
-    exit();
+    
 }
 ?>
 <!DOCTYPE html>

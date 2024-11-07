@@ -60,7 +60,7 @@
                                 <td><?php echo htmlspecialchars($row['wallet_name']); ?></td>
                                 <td><?php echo htmlspecialchars($row['wallet_number']); ?></td>
                                 <td>
-                                    <form action="book_action.php" method="POST">
+                                    <form action="../View/book_action.php" method="POST">
                                         <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
 
                                         <!-- Approve Button -->

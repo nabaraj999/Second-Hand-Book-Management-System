@@ -1,7 +1,9 @@
 <?php
 include ('connection.php');
+session_start();
+
 if (isset($_POST['login'])) {
-    $username = $_POST['username'];
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
 
     // Prepare and execute the statement
@@ -12,12 +14,10 @@ if (isset($_POST['login'])) {
     $user = $result->fetch_assoc();
 
     if ($user) {
-        // Verify the password
-        if (password_verify($password, $user['password'])) {
-            // Password is correct, start session or redirect
-            session_start();
+        // Directly compare passwords (not secure, only for demonstration)
+        if ($password === $user['password']) {
             $_SESSION['user_id'] = $user['id'];
-            header("Location: dashboard.php");
+            header("Location: adminpanelindex.php");
             exit;
         } else {
             $error_message = 'Invalid password. Please try again.';
@@ -29,6 +29,7 @@ if (isset($_POST['login'])) {
 }
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

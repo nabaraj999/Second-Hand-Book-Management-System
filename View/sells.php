@@ -24,34 +24,40 @@ $photo_target = "../uploads/" . basename($photo);
 if ($photo) {
     if (move_uploaded_file($photo_tmp, $photo_target)) {
         echo "Photo uploaded successfully.";
-        header ('location: sell.php');
-        exit(); // exit the script after successful insert.
     } else {
         echo "Error uploading photo.";
+        exit(); // Stop execution if the photo upload fails
     }
 } else {
-    $photo_target = null; // or set a default photo if needed
+    $photo_target = null; // or set a default photo path if needed
 }
 
 // Prepare SQL query to insert data into the database
 $sql = "INSERT INTO books (seller_name, email, book_category, level, class, book_name, author, price, discount, isbn, photo, description)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-// Prepare and bind
-$stmt = $conn->prepare($sql);
-$stmt->bind_param(
-    'ssssssssssss',
-    $seller_name, $email, $book_category, $level, $class, $book_name, $author, $price, $discount, $isbn, $photo, $description
-);
+if ($stmt = $conn->prepare($sql)) {
+    // Bind variables to the prepared statement as parameters
+    $stmt->bind_param(
+        'ssssssssssss',
+        $seller_name, $email, $book_category, $level, $class, $book_name, $author, $price, $discount, $isbn, $photo_target, $description
+    );
 
-// Execute and check
-if ($stmt->execute()) {
-    echo "New record created successfully";
+    // Execute and check
+    if ($stmt->execute()) {
+        echo "New record created successfully";
+        header('Location: sell.php');
+        exit(); // Exit after successful insertion and redirection
+    } else {
+        echo "Error executing statement: " . $stmt->error;
+    }
+
+    // Close the statement
+    $stmt->close();
 } else {
-    echo "Error: " . $stmt->error;
+    echo "Error: Could not prepare SQL statement. " . $conn->error;
 }
 
-// Close the statement and connection
-$stmt->close();
+// Close the database connection
 $conn->close();
 ?>
