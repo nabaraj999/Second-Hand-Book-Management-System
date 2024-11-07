@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    text-decoration: none;
+    color: black;
+    
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 60px; /* To avoid overlapping with the arrow */
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+h2{
+    text-align: center;
+}

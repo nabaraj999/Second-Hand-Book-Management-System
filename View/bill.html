@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Sell Section</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sell-section-container">
+        <h1>Available Books for Sale</h1>
+
+        <?php
+        include('connection.php');
+
+        $categories_sql = "SELECT DISTINCT book_category FROM Bookssells WHERE status = 'approved'";
+        $categories_result = $conn->query($categories_sql);
+
+        if ($categories_result->num_rows > 0) {
+            while($category_row = $categories_result->fetch_assoc()) {
+                $category = $category_row['book_category'];
+
+                echo "<h2>$category</h2>";
+
+                $books_sql = "SELECT * FROM Bookssells WHERE status = 'approved' AND book_category = '$category'";
+                $books_result = $conn->query($books_sql);
+
+                if ($books_result->num_rows > 0) {
+                    echo "<div class='book-category'>";
+                    while($book_row = $books_result->fetch_assoc()) {
+                        echo "<div class='book-item'>";
+                        echo "<img src='" . $book_row['photo'] . "' class='book-photo' alt='" . $book_row['book_name'] . "'>";
+                        echo "<h3>" . $book_row['book_name'] . "</h3>";
+                        echo "<p>Author: " . $book_row['author'] . "</p>";
+                        echo "<p>Price: Rs " . $book_row['price'] . "</p>";
+                        echo "<p>Discount: " . $book_row['discount'] . "%</p>";
+                        echo "<button class='buy-button'>Buy</button>";
+                        echo "</div>";
+                    }
+                    echo "</div>";
+                } else {
+                    echo "<p>No books available in this category.</p>";
+                }
+            }
+        } else {
+            echo "<p>No approved books available for sale.</p>";
+        }
+
+        $conn->close();
+        ?>
+    </div>
+</body>
+</html>

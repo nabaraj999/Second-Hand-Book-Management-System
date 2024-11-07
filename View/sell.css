@@ -1,0 +1,83 @@
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: #f9f9f9;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-left: 400px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+        font-family: 'Arial', sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        width: 50%;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-family: 'Arial', sans-serif;
+        font-size: 14px;
+        color: #555;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: 'Arial', sans-serif;
+        font-size: 14px;
+        color: #333;
+        box-sizing: border-box;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="number"]:focus,
+    textarea:focus,
+    select:focus {
+        border-color: #66afe9;
+        outline: none;
+        box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: 'Arial', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #218838;
+    }
+
+    #academicFields {
+        margin-top: 20px;
+    }
+
+    textarea {
+        resize: vertical;
+    }
