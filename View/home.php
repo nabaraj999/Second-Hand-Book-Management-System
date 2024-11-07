@@ -15,7 +15,7 @@
     <nav>
       <ul>
         <li><a href="home.php" class="logo">
-          <img src="../Photo/Black_and_Orange_Simple_Book_Store_Logo.png" alt="Logo">
+          <img src="../Photo/Black and Orange Simple Book Store Logo.png" alt="Logo">
           <span class="nav-item">BOOKNEST</span>
         </a></li>
 
@@ -46,10 +46,7 @@
           <i class="fas fa-info-circle"></i>
           <span class="nav-item">About</span>
         </a></li>
-        <li><a href="signupa.php" class="logout">
-          <i class="fas fa-sign-out-alt"></i>
-          <span class="nav-item">Log out</span>
-        </a></li>
+       
       </ul>
     </nav>
 

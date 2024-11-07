@@ -36,12 +36,12 @@ if (isset($_SESSION['username'])) {
           <span class="nav-item">User</span>
         </a></li>
 
-        <li><a href="bookmanage.php">
+        <li><a href="../controller/bookmanage.php">
           <i class="fas fa-shopping-cart"></i>
           <span class="nav-item">Buy</span>
         </a></li>
 
-        <li><a href="adminsell.php">
+        <li><a href="../controller/adminsell.php">
           <i class="fas fa-dollar-sign"></i>
           <span class="nav-item">Sell</span>
         </a></li>

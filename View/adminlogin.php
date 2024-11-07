@@ -133,7 +133,7 @@ $conn->close();
 <body>
     <div class="login-container">
         <div class="logo">
-            <img src="logo.png" alt="Logo">
+            <img src="../Photo/Black and Orange Simple Book Store Logo.png" alt="Logo">
         </div>
         <h2>Admin Login</h2>
 
