@@ -29,6 +29,7 @@ if (isset($_SESSION['update_success'])) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +38,6 @@ if (isset($_SESSION['update_success'])) {
     <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
     <link rel="stylesheet" href="profile.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body onload="toggleJobFields();">
 <div class="container">
@@ -63,47 +63,78 @@ if (isset($_SESSION['update_success'])) {
                 <p><?php echo htmlspecialchars($update_success); ?></p>
             </div>
         <?php endif; ?>
-
+        
         <div id="profile-view" class="profile-view">
-    <h1 style="text-align: center;">User Profile</h1>
-    <div class="profile-avatar">
-        <img src="<?php echo !empty($user['avatar']) ? '../uploads/' . htmlspecialchars($user['avatar']) : 'path/to/default-avatar.png'; ?>" alt="User Avatar">
-    </div>
-</div>
-
+            <h1 style="text-align: center;">User Profile</h1>
+            <div class="profile-avatar">
+                <img src="<?php echo !empty($user['avatar']) ? '../uploads/' . htmlspecialchars($user['avatar']) : 'path/to/default-avatar.png'; ?>" alt="User Avatar">
+            </div>
             <div class="profile-details">
                 <p><strong>Full Name:</strong> <?php echo htmlspecialchars($user['full_name']); ?></p>
                 <p><strong>District:</strong> <?php echo htmlspecialchars($user['district']); ?></p>
                 <p><strong>Municipality:</strong> <?php echo htmlspecialchars($user['municipality']); ?></p>
-                <p><strong>Ward No:</strong> <?php echo htmlspecialchars($user['ward_no']); ?></p>
-                <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
-                <p><strong>Phone Number:</strong> <?php echo htmlspecialchars($user['phone_number']); ?></p>
-                <p><strong>Job Type:</strong> <?php echo htmlspecialchars($user['job_type']); ?></p>
-                <?php if ($user['job_type'] == 'Student'): ?>
-                    <p><strong>College Name:</strong> <?php echo htmlspecialchars($user['college_name']); ?></p>
-                    <p><strong>Level:</strong> <?php echo htmlspecialchars($user['level']); ?></p>
-                    <p><strong>Subject:</strong> <?php echo htmlspecialchars($user['subject']); ?></p>
-                <?php elseif ($user['job_type'] == 'Employed'): ?>
-                    <p><strong>Company Name:</strong> <?php echo htmlspecialchars($user['company_name']); ?></p>
-                    <p><strong>Post:</strong> <?php echo htmlspecialchars($user['post']); ?></p>
-                <?php endif; ?>
+            <p><strong>Ward No:</strong> <?php echo htmlspecialchars($user['ward_no']); ?></p>
+            <p><strong>Job Type:</strong> <?php echo htmlspecialchars($user['job_type']); ?></p>
+
+                <!-- More details omitted for brevity -->
             </div>
             <div class="profile-actions">
                 <button onclick="showEditForm()">Edit Profile</button>
+                <button onclick="showDetails()">View Details</button>
             </div>
         </div>
 
+      <!-- CV-like Detail View -->
+<div id="details-view" class="details-view" style="display: none;">
+    <h1 style="text-align: center;">Personal Details</h1>
+    <div class="cv-container">
+        <!-- Profile Picture -->
+        <div class="profile-avatar">
+            <img src="<?php echo !empty($user['avatar']) ? '../uploads/' . htmlspecialchars($user['avatar']) : 'path/to/default-avatar.png'; ?>" alt="User Avatar" style="width:150px; height:150px; border-radius:50%; margin-bottom:20px;">
+        </div>
+
+        <!-- Personal Details in CV Format -->
+        <div class="cv-details">
+            <p><strong>Full Name:</strong> <?php echo htmlspecialchars($user['full_name']); ?></p>
+            <p><strong>District:</strong> <?php echo htmlspecialchars($user['district']); ?></p>
+            <p><strong>Municipality:</strong> <?php echo htmlspecialchars($user['municipality']); ?></p>
+            <p><strong>Ward No:</strong> <?php echo htmlspecialchars($user['ward_no']); ?></p>
+            <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+            <p><strong>Phone Number:</strong> <?php echo htmlspecialchars($user['phone_number']); ?></p>
+            <p><strong>Job Type:</strong> <?php echo htmlspecialchars($user['job_type']); ?></p>
+
+            <!-- Conditionally display educational details if they exist -->
+            <?php if (!empty($user['college_name']) && !empty($user['level']) && !empty($user['subject'])): ?>
+                <h3>Educational Information</h3>
+                <p><strong>College Name:</strong> <?php echo htmlspecialchars($user['college_name']); ?></p>
+                <p><strong>Level:</strong> <?php echo htmlspecialchars($user['level']); ?></p>
+                <p><strong>Subject:</strong> <?php echo htmlspecialchars($user['subject']); ?></p>
+            <?php endif; ?>
+
+            <!-- Conditionally display job details if they exist -->
+            <?php if (!empty($user['company_name']) && !empty($user['post'])): ?>
+                <h3>Job Information</h3>
+                <p><strong>Company Name:</strong> <?php echo htmlspecialchars($user['company_name']); ?></p>
+                <p><strong>Post:</strong> <?php echo htmlspecialchars($user['post']); ?></p>
+            <?php endif; ?>
+        </div>
+        
+        <!-- Button to close the CV view -->
+        <button onclick="closeDetails()" style="margin-top:20px;">Close</button>
+    </div>
+</div>
+
+        <!-- Edit Form - Hidden by Default -->
         <div id="edit-form" class="edit-form" style="display:none;">
             <h1>Edit Profile</h1>
             <form action="save_profile.php" method="post" enctype="multipart/form-data">
-                <div class="profile-avatar">
-                    <img src="<?php echo htmlspecialchars($user['avatar']); ?>" alt="User Avatar">
-                    <label for="avatar-upload">Upload New Avatar:</label>
-                    <input type="file" name="avatar" id="avatar-upload">
-                    <input type="hidden" name="existing_avatar" value="<?php echo htmlspecialchars($user['avatar']); ?>">
-                </div>
 
-                <h2>Personal Details</h2>
+            <div class="profile-avatar">
+            <img src="<?php echo !empty($user['avatar']) ? '../uploads/' . htmlspecialchars($user['avatar']) : 'path/to/default-avatar.png'; ?>" alt="User Avatar">
+            <label for="avatar-upload">Upload New Avatar:</label>
+            <input type="file" name="avatar" id="avatar-upload">
+            <input type="hidden" name="existing_avatar" value="<?php echo htmlspecialchars($user['avatar']); ?>">
+            </div> 
                 <label for="full_name">Full Name:</label>
                 <input type="text" name="full_name" id="full_name" value="<?php echo htmlspecialchars($user['full_name']); ?>" required>
 
@@ -122,9 +153,8 @@ if (isset($_SESSION['update_success'])) {
                 <label for="phone_number">Phone Number:</label>
                 <input type="text" name="phone_number" id="phone_number" value="<?php echo htmlspecialchars($user['phone_number']); ?>" required>
 
-                <h2>Job Details</h2>
-                <label for="job-type">Job Type:</label>
-                <select name="job_type" id="job-type" onchange="toggleJobFields()" required>
+                <label for="job_type">Job Type:</label>
+                <select name="job_type" id="job_type" onchange="toggleJobFields()" required>
                     <option value="">Select Job Type</option>
                     <option value="Student" <?php echo $user['job_type'] == 'Student' ? 'selected' : ''; ?>>Student</option>
                     <option value="Employed" <?php echo $user['job_type'] == 'Employed' ? 'selected' : ''; ?>>Employed</option>
@@ -149,10 +179,12 @@ if (isset($_SESSION['update_success'])) {
                     <input type="text" name="post" id="post" value="<?php echo htmlspecialchars($user['post']); ?>">
                 </div>
 
-                <button type="submit" name="submit">Save Changes</button>
+                <button type="submit">Save Changes</button>
+                <button type="button" onclick="cancelEdit()">Cancel</button>
             </form>
         </div>
     </div>
+</div>
 
 <script>
     function showEditForm() {
@@ -160,10 +192,25 @@ if (isset($_SESSION['update_success'])) {
         document.getElementById('edit-form').style.display = 'block';
     }
 
+    function cancelEdit() {
+        document.getElementById('edit-form').style.display = 'none';
+        document.getElementById('profile-view').style.display = 'block';
+    }
+
     function toggleJobFields() {
-        var jobType = document.getElementById('job-type').value;
-        document.getElementById('student-fields').style.display = (jobType == 'Student') ? 'block' : 'none';
-        document.getElementById('employed-fields').style.display = (jobType == 'Employed') ? 'block' : 'none';
+        var jobType = document.getElementById('job_type').value;
+        document.getElementById('student-fields').style.display = (jobType === 'Student') ? 'block' : 'none';
+        document.getElementById('employed-fields').style.display = (jobType === 'Employed') ? 'block' : 'none';
+    }
+
+    function showDetails() {
+        document.getElementById('profile-view').style.display = 'none';
+        document.getElementById('details-view').style.display = 'block';
+    }
+
+    function closeDetails() {
+        document.getElementById('details-view').style.display = 'none';
+        document.getElementById('profile-view').style.display = 'block';
     }
 </script>
 </body>

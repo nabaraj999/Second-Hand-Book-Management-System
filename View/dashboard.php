@@ -105,8 +105,8 @@ if ($result === false) {
             transform: translateY(-5px);
         }
         .book-card img {
-            width: 150px;
-            height: 220px;
+            width: 100px;
+            height: 150px;
             object-fit: cover;
             border-radius: 10px;
             margin: 10px auto;
